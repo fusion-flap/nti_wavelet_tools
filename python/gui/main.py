@@ -87,7 +87,7 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.hintCheckBox.clicked.connect(self.tryRemoveText)
         self.plothelpButton.clicked.connect(self.openPlotHelp)
         # connect menu
-        self.actionExit.triggered.connect(self.selfexit)
+        self.actionExit.triggered.connect(self.selfExit)
         self.actionNTIWT_git.triggered.connect(self.helpGit)
         self.actionResett.triggered.connect(self.setupGUIDefault)
 
@@ -166,7 +166,7 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
         import webbrowser
         return webbrowser.open('https://github.com/fusion-flap/nti-wavelet-tools/wiki')
 
-    def selfexit(self):
+    def selfExit(self):
         self.close()
 
     def loadSignal(self):
