@@ -24,6 +24,7 @@ class NWTDataObject:
     def __init__(self, logger=core_logger):
         # FLAP dataobjects to be filled:
         self.raw_data = None
+        self.common_time = None
         self.transforms = None
         self.smoothed_apsds = None
         self.crosstransforms = None
@@ -46,6 +47,10 @@ class NWTDataObject:
     def update_properties(self):
         if self.raw_data is not None:
             self.raw_datapoints = self.raw_data.data.shape[-1]
+        time = self.raw_data.coordinate('Time')[0]
+        if len(time.shape) > 1:
+            time = time[:,0]
+        self.common_time = time
 
     def reset(self):
         self.__init__(logger=self.logger)

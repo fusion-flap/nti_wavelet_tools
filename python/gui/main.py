@@ -537,13 +537,12 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.channelID = []
         n = self.data.raw_datapoints
         self.datapointsLabel.setText(str(n))
-        timeax = self.data.raw_data.get_coordinate_object('Time').values
-        dt = (timeax[-1]-timeax[0])/n  # presumably in [s] 2b checked
+        dt = (self.data.common_time[-1]-self.data.common_time[0])/n  # presumably in [s] 2b checked
         fs = 1. / dt / 1000  # kHz
         self.samplingfrequencyLabel.setText('{:.0f}'.format(fs) + ' kHz')
         ui_logger.debug("Sample frequency extracted")
         dt = n / fs  # ms
-        self.timerangeLabel.setText('{:.2f}'.format(timeax[0])+' s +'+'{:.0f}'.format(dt) + ' ms')
+        self.timerangeLabel.setText('{:.2f}'.format(self.data.common_time[0])+' s +'+'{:.0f}'.format(dt) + ' ms')
         _id = self.data.raw_data.get_coordinate_object('Channels').values
         # for ch in _id:
         #     self.channelID.append(str(ch).replace("'", "").replace("b", ""))
