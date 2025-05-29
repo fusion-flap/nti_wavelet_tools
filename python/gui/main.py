@@ -11,6 +11,7 @@ import matplotlib
 mpl_version = matplotlib.__version__
 relative_mpl_canvas = not ('3.2' in mpl_version[0:3]) #check matplotlib version, as it affects mpl functionality
 import sys
+sys.path.insert(0,'../../../')
 import numpy as np
 
 from PyQt5 import QtWidgets, uic, QtTest
@@ -183,11 +184,13 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
             if extension == "flapdata":
                 self.progresslogTextEdit.append('Loading flap object...')
                 ui_logger.info('Loading flap object: ' + path)
+                QtTest.QTest.qWait(100)
                 self.data.load_flap_raw_dump(path)
                 self.loadSuccessful = True
             elif extension == "sav":
                 self.progresslogTextEdit.append("Loading sav file...")
                 ui_logger.info("Loading sav file: " + path)
+                QtTest.QTest.qWait(100)
                 self.data.load_raw_sav(path)
                 ui_logger.debug("Finished loading raw sav")
                 self.loadSuccessful = True
