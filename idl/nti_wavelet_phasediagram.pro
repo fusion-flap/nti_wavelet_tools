@@ -40,8 +40,8 @@ if (time LT min(*saved_datablock.transf_timeax)) OR (time GT max(*saved_databloc
   message, 'nti_wavelet_phasediagram called with time out of range: [' + $
     pg_num2str(min(*saved_datablock.transf_timeax)) + ',' + $
     pg_num2str(max(*saved_datablock.transf_timeax)) + '] s!'
-  if (frequency LT min(*saved_datablock.transf_freqax)) OR (time GT max(*saved_datablock.transf_freqax)) then $
-    message, 'nti_wavelet_phasediagram called with time out of range: [' + $
+if (frequency LT min(*saved_datablock.transf_freqax)) OR (frequency GT max(*saved_datablock.transf_freqax)) then $
+    message, 'nti_wavelet_phasediagram called with frequency out of range: [' + $
     pg_num2str(min(*saved_datablock.transf_freqax)) + ',' + $
     pg_num2str(max(*saved_datablock.transf_freqax)) + '] kHz!'
 
