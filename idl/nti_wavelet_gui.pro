@@ -144,7 +144,7 @@ datablock = { $
 readme_ver = ""
 readme_st = ""
 ;can we open readme.txt?
-openr, unit, startpath+"readme.txt", /get_lun, error=error
+openr, unit, startpath+"../readme.txt", /get_lun, error=error
 
 while (error ne 0) do begin
 
@@ -157,7 +157,7 @@ while (error ne 0) do begin
       startpath = dialog_pickfile(title = "Select directory of nti_wavelet_gui.pro!", /directory)
     endwhile
 
-    openr, unit, startpath+"readme.txt", /get_lun, error=error
+    openr, unit, startpath+"../readme.txt", /get_lun, error=error
 
 endwhile
 
