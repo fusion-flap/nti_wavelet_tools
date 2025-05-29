@@ -2,6 +2,7 @@
 
 
 from scipy.io import readsav
+import numpy as np
 import io
 import flap
 import logging
@@ -48,8 +49,14 @@ class NWTDataObject:
         if self.raw_data is not None:
             self.raw_datapoints = self.raw_data.data.shape[-1]
         time = self.raw_data.coordinate('Time')[0]
-        if len(time.shape) > 1:
+        if len(time.shape) == 2:
+            dt = time[1,0] - time[0,0]
+            for i in range(time.shape[1]):
+                if np.abs(np.max(time[:,i] - time[:,0])) > 1e-5*dt:
+                    raise ValueError("Multiple different time axes.")
             time = time[:,0]
+        elif len(time.shape) > 2:
+            raise ValueError("Too many time dimensions.")
         self.common_time = time
 
     def reset(self):

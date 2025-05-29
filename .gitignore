@@ -158,3 +158,6 @@ dmypy.json
 
 # VSCode
 *.vscode
+
+# FLAP
+*.flapdata
