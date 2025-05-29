@@ -24,9 +24,7 @@ class NavigationToolbar(NavigationToolbar):
                   t[0] in ('Home', 'Zoom', 'Save', 'Pan')]
 import logging
 
-sys.path.append(r"..\utility")
-sys.path.append(r"..\core")
-import core
+from nti_wavelet_tools.python.core import core
 
 # load UI
 logoName = 'logo_circ_thin.png'

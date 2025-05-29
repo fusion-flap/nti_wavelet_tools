@@ -1,16 +1,14 @@
 # NWT dataobject to be implemented here
 
 
-import sys
-
 from scipy.io import readsav
 import io
 import flap
 import logging
 import pickle
 
-sys.path.append(r"..\utility")
-import convert_dict_to_flap
+
+from nti_wavelet_tools.python.utility import convert_dict_to_flap
 
 logging.basicConfig(filename='log.log',
                     filemode='w',
