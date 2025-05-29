@@ -167,6 +167,12 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
         return webbrowser.open('https://github.com/fusion-flap/nti-wavelet-tools/wiki')
 
     def selfExit(self):
+        QtWidgets.QApplication.quit()
+        self.close()
+    
+    def closeEvent(self, event):
+        event.accept()
+        QtWidgets.QApplication.quit()
         self.close()
 
     def loadSignal(self):
@@ -654,3 +660,4 @@ if __name__ == "__main__":
     timer.timeout.connect(lambda: None)
     timer.start(100)
     sys.exit(app.exec_())
+    print("Exiting...")
