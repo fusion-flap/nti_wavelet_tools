@@ -26,6 +26,7 @@ class NWTDataObject:
         # FLAP dataobjects to be filled:
         self.raw_data = None
         self.common_time = None
+        self.channels = None
         self.transforms = None
         self.smoothed_apsds = None
         self.crosstransforms = None
@@ -48,16 +49,6 @@ class NWTDataObject:
     def update_properties(self):
         if self.raw_data is not None:
             self.raw_datapoints = self.raw_data.data.shape[-1]
-        time = self.raw_data.coordinate('Time')[0]
-        if len(time.shape) == 2:
-            dt = time[1,0] - time[0,0]
-            for i in range(time.shape[1]):
-                if np.abs(np.max(time[:,i] - time[:,0])) > 1e-5*dt:
-                    raise ValueError("Multiple different time axes.")
-            time = time[:,0]
-        elif len(time.shape) > 2:
-            raise ValueError("Too many time dimensions.")
-        self.common_time = time
 
     def reset(self):
         self.__init__(logger=self.logger)
@@ -95,6 +86,20 @@ class NWTDataObject:
     def load_flap_raw_dump(self, path):
         self.logger.info('Loading flap object: ' + path)
         self.raw_data = flap.load(path)
+        time = self.raw_data.coordinate('Time')[0]
+        if len(time.shape) == 2:
+            dt = time[1,0] - time[0,0]
+            for i in range(time.shape[1]):
+                if np.abs(np.max(time[:,i] - time[:,0])) > 1e-5*dt:
+                    raise ValueError("Multiple different time axes.")
+            time = time[:,0]
+        elif len(time.shape) > 2:
+            raise ValueError("Too many time dimensions.")
+        self.common_time = time
+        id = self.raw_data.coordinate('ADC Channel')[0][0]
+        if len(id.shape) == 0:
+            id = np.array([id])
+        self.channels = id
         self.update_properties()
         return
 

@@ -543,10 +543,7 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
         ui_logger.debug("Sample frequency extracted")
         dt = n / fs  # ms
         self.timerangeLabel.setText('{:.2f}'.format(self.data.common_time[0])+' s +'+'{:.0f}'.format(dt) + ' ms')
-        _id = self.data.raw_data.get_coordinate_object('Channels').values
-        # for ch in _id:
-        #     self.channelID.append(str(ch).replace("'", "").replace("b", ""))
-        self.channelID = _id
+        self.channelID = self.data.channels.astype(str)
         ui_logger.debug("Channel labels extracted")
 
     def setOtherGrey(self):
