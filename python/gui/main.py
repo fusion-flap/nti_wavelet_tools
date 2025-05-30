@@ -13,6 +13,7 @@ relative_mpl_canvas = not ('3.2' in mpl_version[0:3]) #check matplotlib version,
 import sys
 sys.path.insert(0,'../../../')
 import numpy as np
+import scipy.signal
 
 from PyQt5 import QtWidgets, uic, QtTest
 from PyQt5.QtCore import QRegExp, QTimer
@@ -591,7 +592,11 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
             for i in range(100):
                 self.transformProgressBar.setValue(i + 1)
                 self.modeProgressBar.setValue(i + 1)
-                # place for some math
+            gauss_n = int(self.stftlengthLineEdit.text())/2
+            window_n = int(float(self.stftresolutionLineEdit.text())*2)
+            overlap_n = window_n - int(self.stepLineEdit.text())
+            gaussian = scipy.signal.get_window(('gaussian', gauss_n), Nx = window_n)
+            self.data.transforms = self.data.raw_data.stft('Time', options={'nperseg': window_n, 'noverlap' : overlap_n, 'window': gaussian})
 
             self.openplottinginterfaceButton.setEnabled(True)
             self.saveprocessedsignalButton.setEnabled(True)
