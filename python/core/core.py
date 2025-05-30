@@ -128,22 +128,30 @@ class NWTDataObject:
         else:
 
             return
-
+    
     def save(self, path):
-        if path[-6:] != ".pynwt":
-            path = path + ".pynwt"
-        try:
-            f = open(path, "wb")
-            pickle.dump(self.raw_data, f)
-            pickle.dump(self.transforms, f)
-            pickle.dump(self.smoothed_apsds, f)
-            pickle.dump(self.crosstransforms, f)
-            pickle.dump(self.smoothed_crosstransforms, f)
-            pickle.dump(self.coherences, f)
-            pickle.dump(self.transfers, f)
-            pickle.dump(self.modenumbers, f)
-            pickle.dump(self.qs, f)
-            f.close()
+        allowed = ['sav', 'pynwt']
+        #okay, lets assume .pywnwt is the default file extension we want to use
+        fn = (path.split('/'))[-1]
+        if '.' not in fn:
+            print('setting default extension to .pynwt')
+            path += '.pynwt'
+        ext = path.split('.')[-1]
+        
+        if ext not in allowed:
+            print('Sorry, but I dont support your requested format :(')
             return
+        
+        try:        
+            with open(path, 'wb') as f:
+                pickle.dump(self.raw_data, f)
+                pickle.dump(self.transforms, f)
+                pickle.dump(self.smoothed_apsds, f)
+                pickle.dump(self.crosstransforms, f)
+                pickle.dump(self.smoothed_crosstransforms, f)
+                pickle.dump(self.coherences, f)
+                pickle.dump(self.transfers, f)
+                pickle.dump(self.modenumbers, f)
+                pickle.dump(self.qs, f)
         except Exception as e:
             core_logger.error('Error during loading', exc_info=True)
