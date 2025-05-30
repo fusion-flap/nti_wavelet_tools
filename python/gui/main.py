@@ -596,7 +596,9 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
             window_n = int(float(self.stftresolutionLineEdit.text())*2)
             overlap_n = window_n - int(self.stepLineEdit.text())
             gaussian = scipy.signal.get_window(('gaussian', gauss_n), Nx = window_n)
-            self.data.transforms = self.data.raw_data.stft('Time', options={'nperseg': window_n, 'noverlap' : overlap_n, 'window': gaussian})
+
+            selection = self.data.raw_data.slice_data( slicing = {'ADC Channel': self.data.channels[self.channelSelected]})
+            self.data.transforms = selection.stft('Time', options={'nperseg': window_n, 'noverlap' : overlap_n, 'window': gaussian})
 
             self.openplottinginterfaceButton.setEnabled(True)
             self.saveprocessedsignalButton.setEnabled(True)
