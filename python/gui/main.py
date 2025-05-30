@@ -539,6 +539,18 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
     def quickAndDirtySetting(self):
         self.progresslogTextEdit.append('Quick and dirty button pressed')
         ui_logger.info('Quick and dirty button pressed')
+
+        overlap = 0.95
+        dt = self.data.common_time[1] - self.data.common_time[0]
+        N = self.data.raw_data.data.shape[0]
+        gauss_n = min(N/5, 500)     #sigma of gauss window
+        window_n = min(N, 10*gauss_n)
+        overlap_n = int(window_n*overlap)
+
+        self.stftlengthLineEdit.setText(str(gauss_n*2))
+        self.stftresolutionLineEdit.setText(str(window_n/2))
+        self.samplingfreqLineEdit.setText(str(1/dt))
+        self.stepLineEdit.setText(str(window_n - overlap_n))
         # update stft settings
 
     def updateSignalParameters(self):
