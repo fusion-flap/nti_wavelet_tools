@@ -322,10 +322,11 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.plotTitle = ''
         if selectedPlotOption == 'Spectrogram':
             self.colormap = plt.get_cmap('inferno')
-            self.plottedData = np.abs((self.data.transforms.data)[:,:,0])**0.1
-            self.plotTitle = self.data.transforms.exp_id+'_'+(self.data.transforms.get_coordinate_object('Selected_channels').values)[0]
-            self.timeax = self.data.transforms.get_coordinate_object('Transf_timeax').values
-            self.freqax = self.data.transforms.get_coordinate_object('Transf_freqax').values
+            example = self.data.transforms.slice_data( slicing = {'ADC Channel': self.data.channels[self.channelSelected][0]})
+            self.plottedData = np.abs((example.data))**0.1
+            self.plotTitle = str(example.exp_id)+'_'+str(example.coordinate('ADC Channel')[0][0,0])
+            self.timeax = example.coordinate('Time')[0][0,:]
+            self.freqax = example.coordinate('Frequency')[0][:,0]
             n = 20
             self.colormap = plt.get_cmap('inferno',n)
             self.levels = np.linspace(np.min(self.plottedData), np.max(self.plottedData), n+1)
