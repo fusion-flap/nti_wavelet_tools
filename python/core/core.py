@@ -89,12 +89,17 @@ class NWTDataObject:
         time = self.raw_data.coordinate('Time')[0]
         if len(time.shape) == 2:
             dt = time[1,0] - time[0,0]
-            for i in range(time.shape[1]):
-                if np.abs(np.max(time[:,i] - time[:,0])) > 1e-5*dt:
-                    raise ValueError("Multiple different time axes.")
-            time = time[:,0]
+            try:
+                for i in range(time.shape[1]):
+                    if np.abs(np.max(time[:,i] - time[:,0])) > 1e-5*dt:
+                        raise ValueError("Multiple different time axes, no common time can be set.")
+                time = time[:,0]
+            except(ValueError) as e:
+                self.logger.error(str(e), exc_info=True)
+                time = None
         elif len(time.shape) > 2:
-            raise ValueError("Too many time dimensions.")
+            self.logger.error("Too many time dimensions.", exc_info=True)
+            time = None
         self.common_time = time
         id = self.raw_data.coordinate('ADC Channel')[0][0]
         if len(id.shape) == 0:
