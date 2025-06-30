@@ -92,14 +92,18 @@ class NWTDataObject:
             try:
                 for i in range(time.shape[1]):
                     if np.abs(np.max(time[:,i] - time[:,0])) > 1e-5*dt:
+                        # Interpolation to common time axis can be added here
                         raise ValueError("Multiple different time axes, no common time can be set.")
                 time = time[:,0]
             except(ValueError) as e:
                 self.logger.error(str(e), exc_info=True)
-                time = None
+                self.logger.error("File NOT loaded!", exc_info=True)
+                return
         elif len(time.shape) > 2:
             self.logger.error("Too many time dimensions.", exc_info=True)
-            time = None
+            self.logger.error("File NOT loaded!", exc_info=True)
+            return
+
         self.common_time = time
         id = self.raw_data.coordinate('ADC Channel')[0][0]
         if len(id.shape) == 0:
