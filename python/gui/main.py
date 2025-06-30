@@ -542,7 +542,7 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.progresslogTextEdit.append('Quick and dirty button pressed')
         ui_logger.info('Quick and dirty button pressed')
 
-        overlap = 0.95
+        overlap = 0.75
         dt = self.data.common_time[1] - self.data.common_time[0]
         N = self.data.raw_data.data.shape[0]
         gauss_n = min(N/5, 500)     #sigma of gauss window
