@@ -476,16 +476,6 @@ class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 pass
         self.canvas.draw()
 
-    # def defaultTransformParameters(self):
-    #     self.transformParameters = {}
-    #     self.transformParameters['type'] = 'STFT'
-    #     self.transformParameters['step'] = 5
-    #     self.transformParameters['fs'] = 300  # kHz
-    #     self.transformParameters['window'] = 'gaussian'
-    #     self.transformParameters['windowlength'] = 200  # data point
-    #     self.transformParameters['order'] = 5
-    #     self.transformParameters['scale'] = 0.1
-
     def selectChannels(self):
         ui_logger.debug('Selecting channels started')
         # init window
