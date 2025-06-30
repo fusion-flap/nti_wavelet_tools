@@ -12,6 +12,8 @@ Clone the repository:
 
 git clone https://github.com/fusion-flap/nti-wavelet-tools.git
 
+Add parent directory to Python path!
+
 Detailed instructions in the wiki: https://github.com/fusion-flap/nti-wavelet-tools/wiki
 
 # branches
